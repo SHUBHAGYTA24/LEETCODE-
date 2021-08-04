@@ -1,0 +1,67 @@
+class Solution {
+public:
+    int solve(vector<vector<int>>& v, int  i, int j, int islandID, int n)
+    {
+        if(i<0 || j<0 || i>=n || j>=n || v[i][j]!=1)
+            return 0;
+        
+        v[i][j]=islandID;
+        int ans=0;
+        ans=1+solve(v,i+1,j,islandID,n)+
+            solve(v,i,j+1,islandID,n) +
+            solve(v,i-1,j,islandID,n) +
+            solve(v,i,j-1,islandID,n);
+        
+        return ans;
+    }
+    void adjneigh(vector<vector<int>>& grid, int i, int j, set<int>& s, int n)
+    {
+      
+            if(i>0) s.insert(grid[i-1][j]);
+            if(j>0) s.insert(grid[i][j-1]);
+            if(i<n-1) s.insert(grid[i+1][j]);
+            if(j<n-1) s.insert(grid[i][j+1]);
+    }
+    int largestIsland(vector<vector<int>>& grid) {
+        
+        int n=grid.size();
+        int res=0;
+        int islandID=2;
+        int cnt=0;
+        map<int, int> m;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j]==1)
+                {
+                    int area=solve(grid,i,j,islandID,n);
+                    res=max(res,area);
+                    m[islandID++]=area;
+                    //islandID++;
+                }
+            }
+        }
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j]==0){
+                    set<int> s;
+                    adjneigh(grid,i,j,s,n);
+                    int count=1;
+                    for(auto i : s)
+                    {
+                        count+=m[i];
+                       
+                    }
+                     res=max(res,count);
+                }
+            }
+        }
+        
+        return res;;
+        
+        
+    }
+};
