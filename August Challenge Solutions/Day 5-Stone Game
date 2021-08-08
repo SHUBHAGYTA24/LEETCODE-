@@ -1,0 +1,13 @@
+class Solution {
+public:
+    bool stoneGame(vector<int>& piles) {
+        return true;
+        
+        //since the no of piles is even and alex will play first and can start either from start or from end, 
+        //so, the if he checks when the sum of the piles is greater, he will get the ans.
+        //So there will be two possibilities, 
+               // 1. if he starts from 0th index ans sum the piles at even indices and store in sum1;
+            // 2. if he starts at n-1 th index which will be odd, so then he sum the piles at odd indices and                     store in sum 2.
+        //Now if sum 1> sum2, he will start from 0th index and win, but if sum2>sum1, he will start from last index and he will win, so the answer will be true in every case.
+    }
+};
