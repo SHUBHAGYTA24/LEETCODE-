@@ -1,0 +1,50 @@
+*We need to memoize it as the recursive solution will give TLE*
+
+
+class Solution {
+public:
+    int dp[2001][2001];
+    int dp2[2001][2001];
+    
+    bool ispal(string &s, int i, int j)
+    {
+        if (i >= j) 
+            return 1;
+        if (dp2[i][j] != -1) 
+            return dp2[i][j];
+        if (s[i] == s[j]) 
+            return dp2[i][j] = ispal(s, i + 1, j - 1);
+        return dp2[i][j] = 0;
+    }
+    int solve(string &s, int i, int j)
+    {
+        if(i>=j)
+            return 0;
+        if(ispal(s,i,j))
+            return dp[i][j]=0;
+        
+        if(dp[i][j]!=-1)
+            return dp[i][j];
+        
+        
+        dp[i][j]=INT_MAX;
+        
+        for(int k=i;k<j;k++)
+        {
+            if(ispal(s,i,k)){
+            dp[i][j]=min(dp[i][j], solve(s,k+1,j)+1); 
+            }
+            
+        }
+        
+        return dp[i][j];
+    }
+    int minCut(string s) {
+        int n=s.length();
+        memset(dp,-1,sizeof(dp));
+         memset(dp2,-1,sizeof(dp2));
+        
+        return solve(s,0,n-1);
+        
+    }
+};
