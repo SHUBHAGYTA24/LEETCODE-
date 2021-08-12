@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool canReorderDoubled(vector<int>& a) {
+        int n=a.size();
+        sort(a.begin(),a.end());
+        unordered_map<int, int> m;
+        
+        for(int i=0;i<n;i++)m[a[i]]++;
+        
+        for(int i=0;i<n;i++){
+            if(m[a[i]] && m[a[i]*2]){
+                m[a[i]]--;
+                m[a[i]*2]--;
+            }
+        }
+        for(auto x: m){
+            if(x.second)
+                return false;
+        }
+        return true;
+    }
+};
